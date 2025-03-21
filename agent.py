@@ -18,6 +18,7 @@ FEEDBACK_RAG_ID = os.getenv("FEEDBACK_RAG_ID")
 TICKET_AGENT_ID = os.getenv("TICKET_AGENT_ID")
 
 KNOWLEDGE_BASE_AGENT_ID = os.getenv("KNOWLEDGE_BASE_AGENT_ID")
+KNOWLEDGE_BASE_DUMB_AGENT_ID = os.getenv("KNOWLEDGE_BASE_DUMB_AGENT_ID")
 
 SQL_AGENT_ID = os.getenv("SQL_AGENT_ID")
 
@@ -98,13 +99,26 @@ def add_feedback_accenture_agent(feedback_message, user_input, agent_output):
     return response
 
 
-def chat_with_knowledge_base_agent(user_message, session_id):
+def chat_with_knowledge_base_agent_smart(user_message, session_id):
     url = AGENT_DEV_CHAT_URL
     response = chat_with_agent(
         url,
         LYZR_DEV_API_KEY,
         "default_user",
         KNOWLEDGE_BASE_AGENT_ID,
+        session_id,
+        user_message,
+    )
+    return response["response"]
+
+
+def chat_with_knowledge_base_agent_dumb(user_message, session_id):
+    url = AGENT_DEV_CHAT_URL
+    response = chat_with_agent(
+        url,
+        LYZR_DEV_API_KEY,
+        "default_user",
+        KNOWLEDGE_BASE_DUMB_AGENT_ID,
         session_id,
         user_message,
     )
